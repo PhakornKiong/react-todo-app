@@ -64,10 +64,11 @@ export function addToList(list, data) {
     const text = (data && data.text) ? data.text.trim() : '';
     const textWithEmoji = text.endsWith(FIREWORKS) ? text : (text + ' ' + FIREWORKS);
 
-    let item = Object.assign({
+    // Build the new item ensuring the normalized text wins.
+    let item = Object.assign({}, (data || {}), {
         id: getNextId(),
         text: textWithEmoji
-    }, data);
+    });
 
     return list.concat([item]);
 }
