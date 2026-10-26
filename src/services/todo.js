@@ -58,8 +58,15 @@ function getNextId() {
  * @return {Array}
  */
 export function addToList(list, data) {
+    // Ensure every newly added task text ends with a fireworks emoji (U+1F386).
+    // If the caller already included the emoji, don't duplicate it.
+    const FIREWORKS = '🎆';
+    const text = (data && data.text) ? data.text.trim() : '';
+    const textWithEmoji = text.endsWith(FIREWORKS) ? text : (text + ' ' + FIREWORKS);
+
     let item = Object.assign({
-        id: getNextId()
+        id: getNextId(),
+        text: textWithEmoji
     }, data);
 
     return list.concat([item]);
